@@ -1,0 +1,94 @@
+---
+title: "Exercise 1B"
+format: html
+editor: visual
+---
+
+
+## Clearing Rs memory
+We will start by clearing Rs memory
+```{r}
+rm(list = ls())
+```
+
+##Aim
+We want to create an executable HTML document that samples
+100 values from a log-normal distribution (see the rlnorm function
+
+##Loading libraries
+Here we load the necessary libraries
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(palmerpenguins)
+library(quarto)
+``` 
+
+##creating the data
+here we create the dataset we will be using
+```{r}
+
+set.seed(1234)
+
+data1 <- rlnorm(n = 100, mean = 5, sd = 0.5)
+
+data=data.frame(value=data1)
+
+head(data1)
+
+```
+
+## Plots
+In this section we will create the plots requested
+
+### Histogram
+First the histogram with the linear scale
+```{r}
+linearhistogram <- ggplot(data, aes(x=value)) +
+  geom_histogram(bins = 100) 
+linearhistogram
+```
+##log scale histogram
+Next the histogram with the logarithmic scale
+```{r}
+loghist <- ggplot(data, aes(log(x=value))) +
+  geom_histogram(bins = 100) 
+loghist
+```
+
+##Violin plot
+Here we create a violin plot
+
+```{r}
+data$log_value <- log(data$value)
+
+violoinplot <- ggplot(data, aes(x = value, y = log_value)) +
+  geom_violin() +
+   labs(y = "Log-Transformed Value") +
+  ggtitle("Violin Plot")
+violoinplot
+
+```
+
+##Next comes the statistical analysis
+Here we will do the statistical analysis and embed it in the text
+```{r}
+mean(data1)
+
+```
+The mean of our distribution is
+`r mean(data1)`
+
+### Standard deviation
+
+Here we will do the statistical analysis and embed it in the text
+
+```{r}
+sd(data1)
+
+```
+
+The standard deviation of our distribution is `r sd(data1)`
+
+
+
